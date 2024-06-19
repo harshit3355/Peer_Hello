@@ -44,14 +44,10 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
             echo "Connected to EC2 instance."
             cd /home/ubuntu/typescript-starter
-            echo "Installing pm2..."
-            sudo npm install -g pm2
-            echo "Installing dependencies..."
-            npm install --legacy-peer-deps
             echo "Running tests..."
             npm run test
             echo "Starting application with pm2..."
-            pm2 start npm --name "typescript-starter" -- run start
-            pm2 save
+            ./node_modules/.bin/pm2 start npm --name "typescript-starter" -- run start
+            ./node_modules/.bin/pm2 save
             echo "Deployment completed."
           EOF
