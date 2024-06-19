@@ -1,0 +1,28 @@
+name: Stop Application
+
+on:
+  workflow_dispatch:
+
+jobs:
+  stop:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Stop Application on EC2
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_KEY: ${{ secrets.EC2_KEY }}
+        run: |
+          echo "${EC2_KEY}" > private_key.pem
+          chmod 600 private_key.pem
+          
+          echo "Connecting to EC2 instance to stop the application..."
+          ssh -o StrictHostKeyChecking=no -i private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
+            echo "Connected to EC2 instance."
+            echo "Stopping application with pm2..."
+            pm2 stop typescript-starter
+            pm2 delete typescript-starter
+            pm2 save
+            echo "Application stopped."
+          EOF
