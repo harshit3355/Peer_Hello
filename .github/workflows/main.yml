@@ -45,9 +45,14 @@ jobs:
         run: |
           echo "${EC2_KEY}" > private_key.pem
           chmod 600 private_key.pem
+
+          echo "Testing SSH connection..."
+          ssh -o StrictHostKeyChecking=no -i private_key.pem $EC2_USER@$EC2_HOST "echo 'SSH connection successful.'"
+
           echo "Copying files to EC2 instance..."
           scp -o StrictHostKeyChecking=no -i private_key.pem -r ./* $EC2_USER@$EC2_HOST:/home/ubuntu/typescript-starter
-          echo "Connecting to EC2 instance..."
+
+          echo "Connecting to EC2 instance to run deployment commands..."
           ssh -o StrictHostKeyChecking=no -i private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
             echo "Connected to EC2 instance."
             cd /home/ubuntu/typescript-starter
