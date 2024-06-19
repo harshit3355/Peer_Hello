@@ -45,7 +45,7 @@ jobs:
         run: |
           echo "${EC2_KEY}" > private_key.pem
           chmod 600 private_key.pem
-          scp -o StrictHostKeyChecking=no -i private_key.pem -r ./* $EC2_USER@$EC2_HOST:/home/ubuntu/nestjs-app
+          scp -o StrictHostKeyChecking=no -i private_key.pem -r ./* $EC2_USER@$EC2_HOST:/home/ubuntu/typescript-starter
           ssh -o StrictHostKeyChecking=no -i private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
               cd /home/ubuntu/typescript-starter
               npm install
