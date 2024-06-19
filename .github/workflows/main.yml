@@ -1,28 +1,16 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches:
       - main
-  
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout Code
         uses: actions/checkout@v2
 
@@ -32,7 +20,7 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Run Tests
         run: npm test
@@ -48,25 +36,22 @@ jobs:
           
           echo "Testing SSH connection..."
           ssh -o StrictHostKeyChecking=no -i private_key.pem $EC2_USER@$EC2_HOST "echo 'SSH connection successful.'"
-
+          
           echo "Copying files to EC2 instance..."
-          # scp -o StrictHostKeyChecking=no -i private_key.pem -r ./* $EC2_USER@$EC2_HOST:/home/ubuntu/typescript-starter
-
+          scp -o StrictHostKeyChecking=no -i private_key.pem -r ./* $EC2_USER@$EC2_HOST:/home/ubuntu/typescript-starter
+          
           echo "Connecting to EC2 instance to run deployment commands..."
           ssh -o StrictHostKeyChecking=no -i private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
             echo "Connected to EC2 instance."
             cd /home/ubuntu/typescript-starter
+            echo "Installing pm2..."
+            sudo npm install -g pm2
             echo "Installing dependencies..."
             npm install --legacy-peer-deps
             echo "Running tests..."
             npm run test
-            echo "Starting application..."
-            npm run start
+            echo "Starting application with pm2..."
+            pm2 start npm --name "typescript-starter" -- run start
+            pm2 save
             echo "Deployment completed."
           EOF
-
-      # Runs a set of commands using the runners shell
-      # - name: Run a multi-line script
-      #   run: |
-      #     echo Add other actions to build,
-      #     echo test, and deploy your project.
