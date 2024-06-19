@@ -20,6 +20,7 @@ jobs:
           echo "Connecting to EC2 instance to stop the application..."
           ssh -o StrictHostKeyChecking=no -i private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
             echo "Connected to EC2 instance."
+            cd /home/ubuntu/typescript-starter
             echo "Installing pm2 if not present..."
             # sudo npm install -g pm2
             echo "Stopping application with pm2..."
