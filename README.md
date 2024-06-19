@@ -28,10 +28,4 @@ Manually stops the application running on the EC2 instance using `pm2`.
 - **Screenshots**: [Image Link](https://example.com/screenshot.png)
 - **Screencast**: [Video Link](https://example.com/screencast.mp4)
 
-## License 📄
-
-This project is licensed under the MIT License.
-
----
-
 Feel free to contribute or raise issues if you encounter any problems! 😊
