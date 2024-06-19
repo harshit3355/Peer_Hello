@@ -23,8 +23,8 @@ jobs:
             echo "Installing pm2 if not present..."
             # sudo npm install -g pm2
             echo "Stopping application with pm2..."
-            pm2 stop typescript-starter || true
-            pm2 delete typescript-starter || true
-            pm2 save || true
+            ./node_modules/.bin/pm2 stop typescript-starter || true
+            ./node_modules/.bin/pm2 delete typescript-starter || true
+            ./node_modules/.bin/pm2 save || true
             echo "Application stopped."
           EOF
