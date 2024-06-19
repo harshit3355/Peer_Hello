@@ -45,7 +45,7 @@ jobs:
         run: |
           echo "${EC2_KEY}" > private_key.pem
           chmod 600 private_key.pem
-
+          
           echo "Testing SSH connection..."
           ssh -o StrictHostKeyChecking=no -i private_key.pem $EC2_USER@$EC2_HOST "echo 'SSH connection successful.'"
 
