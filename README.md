@@ -25,7 +25,6 @@ Manually stops the application running on the EC2 instance using `pm2`.
 
 ## Resources 📚
 
-- **Screenshots**: [Image Link](https://example.com/screenshot.png)
-- **Screencast**: [Video Link](https://example.com/screencast.mp4)
+- **Screencast**: [Video Link](https://www.loom.com/share/9b32f2b8157d46168b3cdc2ab3dcbb98?sid=15fffbb4-035d-4599-bf35-0b1a71fe91db)
 
 Feel free to contribute or raise issues if you encounter any problems! 😊
